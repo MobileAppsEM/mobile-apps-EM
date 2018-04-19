@@ -5,7 +5,6 @@
 //  Created by Salman, Muhammad H on 4/9/18.
 //  Copyright © 2018 Salman, Muhammad H. All rights reserved.
 //
-
 import Foundation
 import SpriteKit
 import GameplayKit
@@ -84,7 +83,7 @@ class Level
         SKscene.addChild(wallTop)
         SKscene.addChild(wallBottom)
         
-    
+        
     }
     
 }

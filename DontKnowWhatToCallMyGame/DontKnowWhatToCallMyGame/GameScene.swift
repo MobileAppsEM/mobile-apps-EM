@@ -20,15 +20,14 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView)
     {
-     
+        let level1 : Level = Level(Scene : self)
+        level1.makeWalls()
         
         moveable = MoveableWall(Scene: self)
         moveable!.makeMoveableWall()
         
         ballMove = Ball(scene: self)
         ballMove!.makeBallMove()
-        let level1 : Level = Level(Scene : self)
-        level1.makeWalls()
     }
     
     func touchDown(atPoint pos : CGPoint)
@@ -39,7 +38,7 @@ class GameScene: SKScene {
     func touchMoved(toPoint pos : CGPoint)
     {
         
-    
+        
     }
     
     func touchUp(atPoint pos : CGPoint)

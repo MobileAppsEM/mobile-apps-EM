@@ -12,7 +12,7 @@ import GameplayKit
 class Ball
 {
     let SKscene : SKScene
-    var ballMove : SKSpriteNode = SKSpriteNode()
+    var ballMove : SKSpriteNode = SKSpriteNode(imageNamed: "Spaceship")
     
     init (scene : SKScene) {
         SKscene = scene
@@ -20,20 +20,25 @@ class Ball
     public func makeBallMove()
     {
         
-    
-    ballMove.size.height = SKscene.size.height / 2
-    ballMove.size.width = SKscene.size.width / 2
         
-    ballMove.position = SKscene.position
+        ballMove.position = SKscene.position
         
-    ballMove.color = UIColor.white
+        ballMove.color = UIColor.white
+        ballMove.size.height = SKscene.size.height * 0.05
+        ballMove.size.width = SKscene.size.width * 0.05
         
-    ballMove.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-    ballMove.physicsBody?.friction = 0.0
     
-    ballMove.physicsBody?.affectedByGravity = false
-    
-    SKscene.addChild(ballMove)
+        ballMove.physicsBody = SKPhysicsBody(circleOfRadius: 1)
+        ballMove.physicsBody?.friction = 0.0
+        
+        ballMove.physicsBody?.affectedByGravity = false
+        
+        ballMove.physicsBody?.isDynamic = false
+        
+        ballMove.physicsBody?.allowsRotation = false
+        
+        SKscene.addChild(ballMove)
+        
         
     }
     
