@@ -15,20 +15,19 @@ class GameScene: SKScene {
     
     
     var moveable : MoveableWall?
-    var touchStartY : CGFloat = 0.0
-    var ballMove: Ball?
+    var touchStartY : CGFloat = 0
+    var ball : Ball?
     
     override func didMove(to view: SKView)
     {
-     
+        let level1 : Level = Level(Scene : self)
+        level1.makeWalls()
         
         moveable = MoveableWall(Scene: self)
         moveable!.makeMoveableWall()
         
-        ballMove = Ball(scene: self)
-        ballMove!.makeBallMove()
-        let level1 : Level = Level(Scene : self)
-        level1.makeWalls()
+        ball = Ball(scene: self)
+        ball!.makeBallMove()
     }
     
     func touchDown(atPoint pos : CGPoint)
@@ -105,5 +104,7 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        
+        ball?.pushBall()
     }
 }

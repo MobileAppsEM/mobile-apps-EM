@@ -24,7 +24,7 @@ class MoveableWall
     init(Scene : SKScene)
     {
         SKscene = Scene
-        ballGap = Scene.size.height * 0.10
+        ballGap = Scene.size.height * 0.20
     }
     
     func getUpperRectYVal() -> CGFloat
