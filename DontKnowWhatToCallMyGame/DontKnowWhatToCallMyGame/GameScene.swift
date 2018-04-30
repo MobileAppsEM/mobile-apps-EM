@@ -11,24 +11,28 @@ import GameplayKit
 
 // shows double Iphone 6 check it out and then you will be done
 
-class GameScene: SKScene {
-    
+class GameScene: SKScene, SKPhysicsContactDelegate
+{
     
     var moveable : MoveableWall?
-    var touchStartY : CGFloat = 0.0
-    var ballMove: Ball?
+    var touchStartY : CGFloat = 0
+    var ball : Ball?
+    var maxBallSpeed : CGVector = CGVector(dx: 100.0, dy: 100.0)
+    var currentBallSpeed : CGVector = CGVector(dx: 70.0, dy: 70.0)
+    var start : Bool = true
     
     override func didMove(to view: SKView)
     {
-     
+        physicsWorld.contactDelegate = self
+        
+        let level1 : Level = Level(Scene : self)
+        level1.makeWalls()
         
         moveable = MoveableWall(Scene: self)
         moveable!.makeMoveableWall()
         
-        ballMove = Ball(scene: self)
-        ballMove!.makeBallMove()
-        let level1 : Level = Level(Scene : self)
-        level1.makeWalls()
+        ball = Ball(scene: self)
+        ball!.makeBallMove()
     }
     
     func touchDown(atPoint pos : CGPoint)
@@ -94,16 +98,75 @@ class GameScene: SKScene {
             
         }
     }
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
     
-    override func update(_ currentTime: TimeInterval) {
+    override func update(_ currentTime: TimeInterval)
+    {
         // Called before each frame is rendered
+        if start == true
+        {
+            start = false
+            ball!.pushBall(ballSpeed : currentBallSpeed)
+        }
+    }
+    
+    
+    // function part of physics delegate
+    func didBegin(_ contact: SKPhysicsContact)
+    {
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+        
+        if nodeA.name == "Ball"
+        {
+            CollisionWith(ball: nodeA, object: nodeB)
+        }
+        else if nodeB.name == "Ball"
+        {
+            CollisionWith(ball: nodeB, object: nodeA)
+        }
+        
+    }
+    //Will handle any collisions that the all will have perhaps randomize the angle by changing dy by a random amount?
+    // the randomness i making the value only drop and not return back to normal meaning a reset speedvector is needed to be used
+    func CollisionWith(ball : SKNode, object : SKNode)
+    {
+        // print out to see what it is doing
+        let yChange : CGFloat = CGFloat(drand48())
+        let xChange : CGFloat = CGFloat(drand48())
+        
+        if object.name == "wallTop"
+        {
+            currentBallSpeed.dy = maxBallSpeed.dy * -yChange
+        }
+        if object.name == "wallBottom"
+        {
+            currentBallSpeed.dy = maxBallSpeed.dy * yChange
+        }
+        if object.name == "wallLeft"
+        {
+            currentBallSpeed.dx = maxBallSpeed.dx * xChange
+        }
+        if object.name == "wallRight"
+        {
+            currentBallSpeed.dx = maxBallSpeed.dx * -xChange
+        }
     }
 }
+
+
+
+
+
+
+
+
