@@ -19,12 +19,12 @@ class MoveableWall
     
     let SKscene : SKScene
     
-    let ballGap : CGFloat // make 20 into another variable based on the scrren of other devices
+    let ballGap : CGFloat // set to the size you want it to be
     
     init(Scene : SKScene)
     {
         SKscene = Scene
-        ballGap = Scene.size.height * 0.20
+        ballGap = Scene.size.height * 0.25
     }
     
     func getUpperRectYVal() -> CGFloat
@@ -40,7 +40,7 @@ class MoveableWall
     func makeMoveableWall()
     {
         upperRect.size.height = SKscene.size.height - ballGap // 20 is gap for the ball on thi side
-        upperRect.size.width = 20
+        upperRect.size.width = 25
         upperRect.position.y = SKscene.position.y + ballGap / 2 + upperRect.size.height / 2
         
         lowerRect.size.height = SKscene.size.height - ballGap // 20 is gap for the ball on thi side
@@ -62,6 +62,9 @@ class MoveableWall
         lowerRect.physicsBody?.angularDamping = 0
         lowerRect.physicsBody?.isDynamic = false
         lowerRect.physicsBody?.allowsRotation = false
+        
+        lowerRect.name = "MoveableWallLow"
+        upperRect.name = "MoveableWallUpper"
         
         SKscene.addChild(upperRect)
         SKscene.addChild(lowerRect)

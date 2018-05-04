@@ -48,21 +48,26 @@ class Level
         wallBottom.color = UIColor.cyan
         wallRight.color = UIColor.cyan
         
-        wallLeft.physicsBody = SKPhysicsBody(rectangleOf: wallLeft.frame.size)
-        wallLeft.physicsBody?.restitution = 0
-        wallLeft.physicsBody?.friction = 0.1
         
         wallTop.physicsBody = SKPhysicsBody(rectangleOf: wallTop.frame.size)
         wallTop.physicsBody?.restitution = 0
-        wallTop.physicsBody?.friction = 0.1
+        wallTop.physicsBody?.friction = 0
+        wallTop.physicsBody?.linearDamping = 0
         
         wallBottom.physicsBody = SKPhysicsBody(rectangleOf: wallBottom.frame.size)
         wallBottom.physicsBody?.restitution = 0
-        wallBottom.physicsBody?.friction = 0.1
+        wallBottom.physicsBody?.friction = 0
+        wallBottom.physicsBody?.linearDamping = 0
         
         wallRight.physicsBody = SKPhysicsBody(rectangleOf: wallRight.frame.size)
         wallRight.physicsBody?.restitution = 0
-        wallRight.physicsBody?.friction = 0.1
+        wallRight.physicsBody?.friction = 0
+        wallRight.physicsBody?.linearDamping = 0
+        
+        wallLeft.physicsBody = SKPhysicsBody(rectangleOf: wallLeft.frame.size)
+        wallLeft.physicsBody?.restitution = 0
+        wallLeft.physicsBody?.friction = 0
+        wallLeft.physicsBody?.linearDamping = 0
         
         wallLeft.physicsBody?.affectedByGravity = false
         wallTop.physicsBody?.affectedByGravity = false
@@ -79,6 +84,11 @@ class Level
         wallBottom.physicsBody?.allowsRotation = false
         wallRight.physicsBody?.allowsRotation = false
         
+        wallTop.name = "wallTop"
+        wallRight.name = "wallRight"
+        wallBottom.name  = "wallBottom"
+        wallLeft.name = "wallLeft"
+        
         SKscene.addChild(wallLeft)
         SKscene.addChild(wallRight)
         SKscene.addChild(wallTop)
@@ -86,5 +96,24 @@ class Level
         
     
     }
+    
+    //gets the walls without changing them
+    public func getTopWall() -> SKSpriteNode
+    {
+        return wallTop
+    }
+    public func getBotWall() -> SKSpriteNode
+    {
+        return wallBottom
+    }
+    public func getLeftWall() -> SKSpriteNode
+    {
+        return wallLeft
+    }
+    public func getRightWall() -> SKSpriteNode
+    {
+        return wallRight
+    }
+    
     
 }
